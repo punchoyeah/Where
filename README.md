@@ -1,4 +1,4 @@
 Where
 =====
 
-Where is another kind of communication manner with location as its language
+Where is another way of communication using location as its language
