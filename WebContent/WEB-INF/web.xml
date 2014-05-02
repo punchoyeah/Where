@@ -7,6 +7,10 @@
 		<servlet-name>Test</servlet-name>
 		<servlet-class>org.where.map.example.HelloWorld</servlet-class>
 	</servlet>
+	<servlet>
+	    <servlet-name>Polyline</servlet-name>
+	    <servlet-class>org.where.map.example.SyncPolyline</servlet-class>
+	</servlet>
 	<!-- … -->
 	
 	<servlet-mapping>  
@@ -14,4 +18,8 @@
         <url-pattern>/test</url-pattern>  
     </servlet-mapping> 
     
+    	<servlet-mapping>  
+        <servlet-name>Polyline</servlet-name>  
+        <url-pattern>/polyline</url-pattern>  
+    </servlet-mapping> 
 </web-app>

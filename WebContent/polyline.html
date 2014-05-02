@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+
+<title>Sync Polyline</title>
+<style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+</style>
+    
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="js/lib/jquery-2.1.0.js"></script>
+
+<script>
+
+var map;
+var poly;
+
+function initialize() {
+	var mapOptions = {
+			zoom: 7,
+			center: new google.maps.LatLng(41.879535, -87.624333)
+	};
+	
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	
+	var polyOptions = {
+		strokeColor: '#000000',
+		strokeOpacity: 1.0,
+		strokeWeight: 3
+	};
+	
+	poly = new google.maps.Polyline(polyOptions);
+	poly.setMap(map);
+	google.maps.event.addListener(map, 'click', addLatLng);
+}
+
+function addLatLng(event) {
+	var path = poly.getPath();
+	
+	path.push(event.latLng);
+	
+	$.ajax({
+		// the URL for the request
+		url: "/Where/polyline",
+		// the data to send (will be converted to a query string)
+		data: {
+		method: 'add',
+		lat: event.latLng.lat(),
+		lng: event.latLng.lng()
+		},
+		type: "GET",
+		// the type of data we expect back
+		dataType : "json",
+		success: function( json ) {
+			alert("success");
+	    },
+	    error: function( xhr, status, errorThrown ) {
+	    	alert( "Sorry, there was a problem!" + status);
+	    	
+	    },
+	    complete: function( xhr, status ) {
+	    	alert( "The request is complete!" );
+	    }
+	});
+	
+	var marker = new google.maps.Marker({
+	    position: event.latLng,
+	    title: '#' + path.getLength(),
+	    map: map
+	});
+}
+	
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+</head>
+
+
+<body>
+    <div id='map-canvas'></div>
+</body>
+</html>
