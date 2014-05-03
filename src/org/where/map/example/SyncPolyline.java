@@ -1,6 +1,7 @@
 package org.where.map.example;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class SyncPolyline extends HttpServlet{
@@ -24,6 +26,10 @@ public class SyncPolyline extends HttpServlet{
             HttpServletResponse response) throws ServletException, IOException {  
         
 		String method = request.getParameter("method");
+		String pathStr = request.getParameter("pathStr");
+		
+		Object[] points = JSONArray.fromObject(pathStr).toArray();
+		
 		if ("add".equals(method)) {
 	        path.put(request.getParameter("lat"), request.getParameter("lng"));
 	        response.setContentType("application/json;charset=UTF-8");

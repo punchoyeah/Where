@@ -15,6 +15,7 @@
     
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="js/lib/jquery-2.1.0.js"></script>
+<script src="js/lib/json2.js"></script>
 
 <script>
 
@@ -45,6 +46,8 @@ function addLatLng(event) {
 	
 	path.push(event.latLng);
 	
+	alert(JSON.stringify(path.getArray()));
+	
 	$.ajax({
 		// the URL for the request
 		url: "/Where/polyline",
@@ -52,7 +55,8 @@ function addLatLng(event) {
 		data: {
 		method: 'add',
 		lat: event.latLng.lat(),
-		lng: event.latLng.lng()
+		lng: event.latLng.lng(),
+		pathStr: JSON.stringify(path.getArray())
 		},
 		type: "GET",
 		// the type of data we expect back
